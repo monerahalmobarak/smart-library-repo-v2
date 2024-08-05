@@ -8,7 +8,7 @@
 # from langchain_chroma import Chroma
 
 # # Set the OpenAI API key directly
-# openai_api_key=os.environ["OPENAI_API_KEY"] = "sk-proj-wfXW64JKdCMXoyIfcJ7KT3BlbkFJbuZU5KVw67xZXgnUvC1B"
+# openai_api_key=os.environ["OPENAI_API_KEY"] = ""
 
 # # Check if the OpenAI API key is set
 # if not openai_api_key:
@@ -101,7 +101,7 @@ from app.Books.books_info import fetch_all_books
 from langchain_chroma import Chroma
 
 # Set the OpenAI API key directly
-openai_api_key = os.environ["OPENAI_API_KEY"] = "sk-proj-wfXW64JKdCMXoyIfcJ7KT3BlbkFJbuZU5KVw67xZXgnUvC1B"
+openai_api_key = os.environ["OPENAI_API_KEY"] = ""
 
 # Check if the OpenAI API key is set
 if not openai_api_key:
