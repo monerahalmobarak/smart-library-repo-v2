@@ -95,7 +95,6 @@ const AdminPage: FC = () => {
     try {
       const response = await fetch(`http://localhost:8000/users/${userId}`, { method: 'DELETE' });
       if (response.ok) {
-        // Updating the state to remove the deleted user
         setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
         console.log(`User with ID: ${userId} has been deleted.`);
       } else {

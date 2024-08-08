@@ -11,7 +11,10 @@ import ProfilePage from './components/Profile/ProfilePage.tsx';
 import Chatbot from './components/ChatBot/chatbot.tsx'; 
 import AdminPage from './components/Profile/AdminPage.tsx';
 import styles from './App.module.css';
+import ProtectedRoute from './components/Profile/ProtectedRoute.tsx'
+import {jwtDecode} from 'jwt-decode';
 
+// /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/App.tsx
 
 
 interface Book {
@@ -26,12 +29,19 @@ interface Book {
   num_pages: number;
 }
 
+interface DecodedToken {
+  sub: string;
+  role: string;
+  user_id: string;
+}
+
 const App: FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [allBooks, setAllBooks] = useState<Book[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>('');
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   const search = (query: string): void => {
     setSearchQuery(query);
@@ -53,8 +63,7 @@ const App: FC = () => {
         filteredBooks.sort((a, b) => a.average_rating - b.average_rating);
         break;
       case 'recently-added':
-        // Assuming 'recently-added' means the most recently added to the database.
-        // If you have a date_added field, sort by it.
+    
         break;
       default:
         break;
@@ -125,6 +134,15 @@ const App: FC = () => {
     }
   }, [searchQuery, allBooks]);
 
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      const decodedToken = jwtDecode<DecodedToken>(token);
+      setUserId(decodedToken.user_id);
+      setUserRole(decodedToken.role);
+    }
+  }, []);
+
   return (
     <Router>
       <div className={styles.App}>
@@ -150,8 +168,15 @@ const App: FC = () => {
             } />
             <Route path="/profile" element={<ProfilePage userId={userId} />} />
             <Route path="/auth" element={<AuthPage setUserId={setUserId} />} />
-            <Route path="/AdminPage" element={<AdminPage />} />
-          </Routes>
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute isAllowed={userRole === 'Admin'}>
+                  <AdminPage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>          
         </div>
         <Chatbot />
       </div>

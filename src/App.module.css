@@ -455,3 +455,31 @@ button:hover {
 }
 
 
+.profile-container {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #445A9A;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 6px;
+  z-index: 1000;
+}
+
+.profile-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.profile-dropdown button:hover {
+  background-color: #172242;
+}
