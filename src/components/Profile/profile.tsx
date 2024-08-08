@@ -1,3 +1,5 @@
+// /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/Profile/profile.tsx
+
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../App.module.css';

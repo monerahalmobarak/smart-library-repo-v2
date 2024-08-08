@@ -2,6 +2,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
+
+
 body {
   background-color: #15171B;
   color: #FFFFFF;
@@ -409,3 +411,47 @@ button:hover {
 .admin-table button:hover {
   background-color: #d32f2f; /* Darker red on hover */
 }
+
+
+
+.filter-dropdown button:hover {
+  background-color: #172242;
+  color: black; 
+}
+
+
+/* Ensure the search-bar class is relatively positioned */
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 80px;
+  background-color: #172242;
+
+}
+
+
+.filter-dropdown {
+  position: absolute;
+  top: 100%; /* Place the dropdown below the search bar */
+  background-color: #445A9A;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  border-radius: 4px;
+  z-index: 1000;
+  right: 0; /* Align the dropdown to the right edge of the search bar */
+}
+
+.filter-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: none;
+  text-align: left; /* Align text to the left */
+  cursor: pointer;
+  color: white; /* Ensure text color contrasts with the background */
+}
+
+

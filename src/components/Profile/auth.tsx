@@ -1,3 +1,5 @@
+// /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/Profile/auth.tsx
+
 import React, { useState, ChangeEvent, FormEvent, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';

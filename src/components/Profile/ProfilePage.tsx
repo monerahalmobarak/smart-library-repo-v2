@@ -1,3 +1,5 @@
+// /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/Profile/ProfilePage.tsx
+
 import React, { useEffect, useState, FC } from 'react';
 
 interface User {

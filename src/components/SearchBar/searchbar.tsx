@@ -1,3 +1,5 @@
+///Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/SearchBar/searchbar.tsx
+
 import React, { useState, ChangeEvent, FC } from 'react';
 import styles from '../../App.module.css';
 
@@ -20,17 +22,45 @@ const SearchIcon: FC = () => {
   );
 };
 
+const FilterIcon: FC = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M10.0801 18.5928H3.77905C3.36505 18.5928 3.02905 18.2568 3.02905 17.8428C3.02905 17.4288 3.36505 17.0928 3.77905 17.0928H10.0801C10.4941 17.0928 10.8301 17.4288 10.8301 17.8428C10.8301 18.2568 10.4941 18.5928 10.0801 18.5928Z" fill="#F7F5FF"/>
+    <path fillRule="evenodd" clipRule="evenodd" d="M19.1909 8.90039H12.8909C12.4769 8.90039 12.1409 8.56439 12.1409 8.15039C12.1409 7.73639 12.4769 7.40039 12.8909 7.40039H19.1909C19.6049 7.40039 19.9409 7.73639 19.9409 8.15039C19.9409 8.56439 19.6049 8.90039 19.1909 8.90039Z" fill="#F7F5FF"/>
+    <mask id="mask0_85_11642" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x="3" y="5" width="7" height="7">
+      <path fillRule="evenodd" clipRule="evenodd" d="M3 5.0004H9.2258V11.192H3V5.0004Z" fill="white"/>
+    </mask>
+    <g mask="url(#mask0_85_11642)">
+      <path fillRule="evenodd" clipRule="evenodd" d="M6.11276 6.5C5.22376 6.5 4.49976 7.216 4.49976 8.097C4.49976 8.977 5.22376 9.692 6.11276 9.692C7.00276 9.692 7.72576 8.977 7.72576 8.097C7.72576 7.216 7.00276 6.5 6.11276 6.5ZM6.11276 11.192C4.39676 11.192 2.99976 9.804 2.99976 8.097C2.99976 6.39 4.39676 5 6.11276 5C7.82976 5 9.22576 6.39 9.22576 8.097C9.22576 9.804 7.82976 11.192 6.11276 11.192Z" fill="#F7F5FF"/>
+    </g>
+    <path fillRule="evenodd" clipRule="evenodd" d="M17.3877 16.208C16.4977 16.208 15.7737 16.924 15.7737 17.804C15.7737 18.685 16.4977 19.4 17.3877 19.4C18.2767 19.4 18.9997 18.685 18.9997 17.804C18.9997 16.924 18.2767 16.208 17.3877 16.208ZM17.3877 20.9C15.6707 20.9 14.2737 19.511 14.2737 17.804C14.2737 16.097 15.6707 14.708 17.3877 14.708C19.1037 14.708 20.4997 16.097 20.4997 17.804C20.4997 19.511 19.1037 20.9 17.3877 20.9Z" fill="#F7F5FF"/>
+    <circle cx="6" cy="8" r="2" fill="#F7F5FF"/>
+  </svg>
+);
+
 interface SearchBarProps {
   onSearch: (query: string) => void;
+  onFilter: (filter: string) => void;
 }
 
-const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: FC<SearchBarProps> = ({ onSearch, onFilter }) => {
   const [query, setQuery] = useState<string>('');
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+
   const handleSearchClick = () => {
     onSearch(query);
+  };
+
+  const handleFilterClick = () => {
+    setShowFilters(!showFilters);
+  };
+
+  const handleFilterSelect = (filter: string) => {
+    onFilter(filter);
+    setShowFilters(false);
   };
 
   return (
@@ -44,7 +74,20 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
         value={query}
         onChange={handleInputChange}
       />
+      <button onClick={handleFilterClick}>
+        <FilterIcon />
+      </button>
+      {showFilters && (
+        <div className={styles['filter-dropdown']}>
+          <button onClick={() => handleFilterSelect('recent')}>Most recent publish year</button>
+          <button onClick={() => handleFilterSelect('earliest')}>Earliest publish year</button>
+          <button onClick={() => handleFilterSelect('top-rated')}>Top rated</button>
+          <button onClick={() => handleFilterSelect('least-rated')}>Least rated</button>
+          <button onClick={() => handleFilterSelect('recently-added')}>Recently Added</button>
+        </div>
+      )}
     </div>
   );
 };
+
 export default SearchBar;

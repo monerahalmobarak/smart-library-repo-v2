@@ -1,6 +1,6 @@
-// Importing React and necessary hooks and types from 'react'
+// /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/App.tsx
+
 import React, { useEffect, useState, FC } from 'react';
-// Importing components
 import BookItem from './components/BookItem/bookitem.tsx';
 import SearchBar from './components/SearchBar/searchbar.tsx';
 import Loader from './components/Loader/loader.tsx';
@@ -10,11 +10,10 @@ import AuthPage from './components/Profile/auth.tsx';
 import ProfilePage from './components/Profile/ProfilePage.tsx';
 import Chatbot from './components/ChatBot/chatbot.tsx'; 
 import AdminPage from './components/Profile/AdminPage.tsx';
-
-// Importing CSS module for styling
 import styles from './App.module.css';
 
-// Defining interface for Book object
+
+
 interface Book {
   id: number;
   title: string;
@@ -27,25 +26,42 @@ interface Book {
   num_pages: number;
 }
 
-// Functional Component App as the main application component
 const App: FC = () => {
-  // State to manage the search query
   const [searchQuery, setSearchQuery] = useState<string>("");
-  // State to manage all books
   const [allBooks, setAllBooks] = useState<Book[]>([]);
-  // State to manage the currently displayed books
   const [books, setBooks] = useState<Book[]>([]);
-  // State to manage the loading status
   const [loading, setLoading] = useState<boolean>(false);
-  // State to manage the user ID
   const [userId, setUserId] = useState<string>('');
 
-  // Function to handle search and set the search query
   const search = (query: string): void => {
     setSearchQuery(query);
   };
 
-  // useEffect hook to fetch all books when the component mounts
+  const filterBooks = (filter: string): void => {
+    let filteredBooks = [...allBooks];
+    switch (filter) {
+      case 'recent':
+        filteredBooks.sort((a, b) => b.published_year - a.published_year);
+        break;
+      case 'earliest':
+        filteredBooks.sort((a, b) => a.published_year - b.published_year);
+        break;
+      case 'top-rated':
+        filteredBooks.sort((a, b) => b.average_rating - a.average_rating);
+        break;
+      case 'least-rated':
+        filteredBooks.sort((a, b) => a.average_rating - b.average_rating);
+        break;
+      case 'recently-added':
+        // Assuming 'recently-added' means the most recently added to the database.
+        // If you have a date_added field, sort by it.
+        break;
+      default:
+        break;
+    }
+    setBooks(filteredBooks);
+  };
+
   useEffect(() => {
     const fetchAllBooks = async () => {
       setLoading(true);
@@ -56,6 +72,7 @@ const App: FC = () => {
         }
         const data: Book[] = await response.json();
         setAllBooks(data);
+        setBooks(data); // Initialize with all books
       } catch (error) {
         console.error('Error:', error);
         setAllBooks([]);
@@ -67,7 +84,6 @@ const App: FC = () => {
     fetchAllBooks();
   }, []);
 
-  // useEffect hook to fetch books based on the search query or all books
   useEffect(() => {
     const fetchBooks = async () => {
       setLoading(true);
@@ -110,50 +126,37 @@ const App: FC = () => {
   }, [searchQuery, allBooks]);
 
   return (
-    // Setting up the Router for navigation
     <Router>
       <div className={styles.App}>
         <div className="flex justify-center items-center space-x-2">
           <div className={styles['profile-icon-container']}>
-            {/* Application header */}
             <h1 className="text-5xl">Library</h1>
-            {/* Profile icon button */}
             <ProfileIcon />
           </div>
-          {/* Defining routes */}
           <Routes>
             <Route path="/" element={
               <>
-                {/* Search bar component */}
-                <SearchBar onSearch={search} />
+                <SearchBar onSearch={search} onFilter={filterBooks} />
                 <div className={`${styles['search-results']} ${styles['book-container']}`}>
-                  {/* Loading indicator */}
                   {loading && <Loader />}
-                  {/* Message when no results are found */}
                   {!loading && searchQuery && books.length === 0 && (
                     <p>No results found for "{searchQuery}"</p>
                   )}
-                  {/* Displaying list of books */}
                   {!loading && books.map((book) => (
                     <BookItem key={book.id} book={book} />
                   ))}
                 </div>
               </>
             } />
-            {/* Profile page route */}
             <Route path="/profile" element={<ProfilePage userId={userId} />} />
-            {/* Authentication page route */}
             <Route path="/auth" element={<AuthPage setUserId={setUserId} />} />
-            {/* Admin page route */}
             <Route path="/AdminPage" element={<AdminPage />} />
           </Routes>
         </div>
-        {/* Chatbot component */}
         <Chatbot />
       </div>
     </Router>
   );
 }
 
-// Exporting the App component as default
 export default App;

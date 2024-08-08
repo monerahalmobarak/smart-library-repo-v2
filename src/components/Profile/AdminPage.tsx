@@ -1,11 +1,8 @@
 // /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/Profile/AdminPage.tsx
 
-// Importing React and necessary hooks from 'react'
 import React, { FC, useEffect, useState } from 'react';
-// Importing CSS module for styling
 import styles from '../../App.module.css';
 
-// Defining interface for Book object
 interface Book {
   book_id: number;
   title: string;
@@ -20,23 +17,17 @@ interface Book {
   ratings_count: number;
 }
 
-// Defining interface for User object
 interface User {
   id: string;
   username: string;
   role: string;
 }
 
-// Functional Component AdminPage that handles book and user management
 const AdminPage: FC = () => {
-  // State to manage the list of books
   const [books, setBooks] = useState<Book[]>([]);
-  // State to manage the list of users
   const [users, setUsers] = useState<User[]>([]);
 
-  // useEffect hook to fetch books and users when the component mounts
   useEffect(() => {
-    // Function to fetch books from the server
     const fetchBooks = async () => {
       try {
         const response = await fetch('http://localhost:8000/books');
@@ -52,7 +43,6 @@ const AdminPage: FC = () => {
       }
     };
 
-    // Function to fetch users from the server
     const fetchUsers = async () => {
       try {
         const response = await fetch('http://localhost:8000/users/all');
@@ -67,12 +57,10 @@ const AdminPage: FC = () => {
       }
     };
 
-    // Fetching books and users when component mounts
     fetchBooks();
     fetchUsers();
   }, []);
 
-  // Function to truncate a string to a specified length and add ellipsis
   const truncate = (str: string, num: number) => {
     if (str.length > num) {
       return str.slice(0, num) + "...";
@@ -80,7 +68,6 @@ const AdminPage: FC = () => {
     return str;
   };
 
-  // Function to delete a book by its ID
   const deleteBook = async (bookId: number) => {
     console.log(`Attempting to delete book with ID: ${bookId}`);
     if (!bookId) {
@@ -103,7 +90,6 @@ const AdminPage: FC = () => {
     }
   };
 
-  // Function to delete a user by their ID
   const deleteUser = async (userId: string) => {
     console.log(`Attempting to delete user with ID: ${userId}`);
     try {
@@ -122,11 +108,9 @@ const AdminPage: FC = () => {
 
   return (
     <div className={styles['admin-panel']}>
-      {/* Admin panel header */}
       <h1 className={styles['admin-header']}>Admin Panel</h1>
       <div className={styles['tables-container']}>
         <div>
-          {/* Books section header */}
           <h2 className={styles['admin-header']}>Books</h2>
           <table className={styles['admin-table']}>
             <thead>
@@ -145,11 +129,9 @@ const AdminPage: FC = () => {
                   <td>{book.title}</td>
                   <td>{book.authors.join(", ")}</td>
                   <td>{book.published_year}</td>
-                  {/* Truncating the book description to 50 characters */}
                   <td className={styles['description-cell']}>{truncate(book.description, 50)}</td>
                   <td>{book.average_rating.toFixed(1)}</td>
                   <td>
-                    {/* Delete button for the book */}
                     <button onClick={() => deleteBook(book.book_id)}>Delete</button>
                   </td>
                 </tr>
@@ -158,7 +140,6 @@ const AdminPage: FC = () => {
           </table>
         </div>
         <div>
-          {/* Users section header */}
           <h2 className={styles['admin-header']}>Users</h2>
           <table className={styles['admin-table']}>
             <thead>
@@ -174,7 +155,6 @@ const AdminPage: FC = () => {
                   <td>{user.username}</td>
                   <td>{user.role}</td>
                   <td>
-                    {/* Delete button for the user */}
                     <button onClick={() => deleteUser(user.id)}>Delete</button>
                   </td>
                 </tr>
@@ -187,5 +167,4 @@ const AdminPage: FC = () => {
   );
 };
 
-// Exporting the AdminPage component as default
 export default AdminPage;
