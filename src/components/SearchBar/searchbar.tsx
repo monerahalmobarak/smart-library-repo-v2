@@ -1,5 +1,5 @@
-///Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/SearchBar/searchbar.tsx
 import React, { useState, ChangeEvent, FC } from 'react';
+import styles from '../../App.module.css';
 
 const SearchIcon: FC = () => {
   return (
@@ -26,17 +26,15 @@ interface SearchBarProps {
 
 const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState<string>('');
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-
   const handleSearchClick = () => {
     onSearch(query);
   };
 
   return (
-    <div className="search-bar">
+    <div className={styles['search-bar']}>
       <button onClick={handleSearchClick}>
         <SearchIcon />
       </button>
@@ -49,5 +47,4 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
     </div>
   );
 };
-
 export default SearchBar;

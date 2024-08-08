@@ -1,6 +1,6 @@
-// /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/Profile/profile.tsx
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from '../../App.module.css';
 
 const ProfileIcon: FC = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const ProfileIcon: FC = () => {
   };
 
   return (
-    <button className="profile-button" onClick={handleProfileClick}>
+    <button className={styles['profile-button']} onClick={handleProfileClick}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_85_14234" style={{ maskType: 'luminance' }} maskUnits="userSpaceOnUse" x="4" y="14" width="16" height="8">
           <path fillRule="evenodd" clipRule="evenodd" d="M4 14.4961H19.8399V21.8701H4V14.4961Z" fill="white"/>

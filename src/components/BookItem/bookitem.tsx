@@ -1,5 +1,6 @@
-// /Users/malmobarak001/All_Vscode/myprojectforbooks/frontend/src/components/BookItem/bookitem.tsx
+
 import React, { useState, FC } from 'react';
+import styles from '../../App.module.css';
 
 interface StarProps {
   fillPercentage: number;
@@ -27,9 +28,9 @@ interface StarRatingProps {
 const StarRating: FC<StarRatingProps> = ({ rating }) => {
   const fillPercentage = (rating / 5) * 100;
   return (
-    <div className="star-rating">
+    <div className={styles['star-rating']}>
       <Star fillPercentage={fillPercentage} />
-      <span className="rating-number">{rating}</span>
+      <span className={styles['rating-number']}>{rating}</span>
     </div>
   );
 };
@@ -51,32 +52,31 @@ interface BookItemProps {
 
 const BookItem: FC<BookItemProps> = ({ book }) => {
   const [flipped, setFlipped] = useState(false);
-
   const handleFlip = () => {
     setFlipped(!flipped);
   };
 
   return (
-    <div className="book-container">
-      <div className={`book-card ${flipped ? 'flipped' : ''}`} onClick={handleFlip}>
-        <div className="book-card-inner">
-          <div className="book-card-front">
-            <div className="book-title">{book.title}</div>
-            <div className="book-subtitle">
-              <div className="book-authors">{book.authors.join(', ')}</div>
-              <div className="book-published-year">{book.published_year}</div>
+    <div className={styles['book-container']}>
+      <div className={`${styles['book-card']} ${flipped ? styles['flipped'] : ''}`} onClick={handleFlip}>
+        <div className={styles['book-card-inner']}>
+          <div className={styles['book-card-front']}>
+            <div className={styles['book-title']}>{book.title}</div>
+            <div className={styles['book-subtitle']}>
+              <div className={styles['book-authors']}>{book.authors.join(', ')}</div>
+              <div className={styles['book-published-year']}>{book.published_year}</div>
             </div>
-            <div className="cover-photo" style={{ backgroundImage: `url(${book.thumbnail})` }}></div>
-            <div className="book-subtitle1">
-              <div className="book-categories">{book.categories}</div>
-              <div className="book-average-rating">
+            <div className={styles['cover-photo']} style={{ backgroundImage: `url(${book.thumbnail})` }}></div>
+            <div className={styles['book-subtitle1']}>
+              <div className={styles['book-categories']}>{book.categories}</div>
+              <div className={styles['book-average-rating']}>
                 <StarRating rating={Math.round(book.average_rating)} />
               </div>
             </div>
           </div>
-          <div className="book-card-back">
-            <div className="book-description">{book.description}</div>
-            <div className="book-num-pages">{book.num_pages}</div>
+          <div className={styles['book-card-back']}>
+            <div className={styles['book-description']}>{book.description}</div>
+            <div className={styles['book-num-pages']}>{book.num_pages}</div>
           </div>
         </div>
       </div>
